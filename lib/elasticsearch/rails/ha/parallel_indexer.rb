@@ -33,7 +33,7 @@ module Elasticsearch
           return if @pool_size < 1
 
           # get all ids since we can't assume there are no holes in the PK sequencing
-          ids = klass.order('id ASC').pluck(:id)
+          ids = klass.reorder('id ASC').pluck(:id)
           offsets = []
           ids.each_slice(@pool_size) do |chunk|
             #puts "chunk: size=#{chunk.size} #{chunk.first}..#{chunk.last}"
